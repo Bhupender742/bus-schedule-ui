@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		926575F926BE35E3001A2D76 /* RouteInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */; };
 		926575FB26BE36F7001A2D76 /* RouteInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */; };
+		926575FD26BE3FBE001A2D76 /* RouteTimingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575FC26BE3FBE001A2D76 /* RouteTimingCellViewModel.swift */; };
+		926575FF26BE408F001A2D76 /* RouteTimingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575FE26BE408F001A2D76 /* RouteTimingViewModel.swift */; };
+		9265760126BE463C001A2D76 /* RouteTimingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9265760026BE463C001A2D76 /* RouteTimingCell.swift */; };
+		9265760326BE5885001A2D76 /* RouteTimingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9265760226BE5885001A2D76 /* RouteTimingTableViewCell.swift */; };
 		9284D0A426BD42710036453D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A326BD42710036453D /* AppDelegate.swift */; };
 		9284D0A626BD42710036453D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A526BD42710036453D /* SceneDelegate.swift */; };
 		9284D0A826BD42710036453D /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A726BD42710036453D /* ScheduleViewController.swift */; };
@@ -24,6 +28,10 @@
 /* Begin PBXFileReference section */
 		926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoCellViewModel.swift; sourceTree = "<group>"; };
 		926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoViewModel.swift; sourceTree = "<group>"; };
+		926575FC26BE3FBE001A2D76 /* RouteTimingCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimingCellViewModel.swift; sourceTree = "<group>"; };
+		926575FE26BE408F001A2D76 /* RouteTimingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimingViewModel.swift; sourceTree = "<group>"; };
+		9265760026BE463C001A2D76 /* RouteTimingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimingCell.swift; sourceTree = "<group>"; };
+		9265760226BE5885001A2D76 /* RouteTimingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTimingTableViewCell.swift; sourceTree = "<group>"; };
 		9284D0A026BD42710036453D /* BusScheduleUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusScheduleUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9284D0A326BD42710036453D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9284D0A526BD42710036453D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,8 +60,10 @@
 		926575F726BE3514001A2D76 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
-				926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */,
 				926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */,
+				926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */,
+				926575FC26BE3FBE001A2D76 /* RouteTimingCellViewModel.swift */,
+				926575FE26BE408F001A2D76 /* RouteTimingViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -105,6 +115,8 @@
 			children = (
 				9284D0A726BD42710036453D /* ScheduleViewController.swift */,
 				9284D0BE26BD48DF0036453D /* RouteInfoCell.swift */,
+				9265760026BE463C001A2D76 /* RouteTimingCell.swift */,
+				9265760226BE5885001A2D76 /* RouteTimingTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,13 +199,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				926575FD26BE3FBE001A2D76 /* RouteTimingCellViewModel.swift in Sources */,
 				9284D0B926BD43330036453D /* NetworkManager.swift in Sources */,
 				9284D0A826BD42710036453D /* ScheduleViewController.swift in Sources */,
+				9265760126BE463C001A2D76 /* RouteTimingCell.swift in Sources */,
 				9284D0A426BD42710036453D /* AppDelegate.swift in Sources */,
 				9284D0BD26BD47F30036453D /* RouteModel.swift in Sources */,
 				9284D0A626BD42710036453D /* SceneDelegate.swift in Sources */,
 				926575FB26BE36F7001A2D76 /* RouteInfoViewModel.swift in Sources */,
 				9284D0BF26BD48DF0036453D /* RouteInfoCell.swift in Sources */,
+				926575FF26BE408F001A2D76 /* RouteTimingViewModel.swift in Sources */,
+				9265760326BE5885001A2D76 /* RouteTimingTableViewCell.swift in Sources */,
 				926575F926BE35E3001A2D76 /* RouteInfoCellViewModel.swift in Sources */,
 				9284D0C126BD4D9D0036453D /* Reusable.swift in Sources */,
 			);

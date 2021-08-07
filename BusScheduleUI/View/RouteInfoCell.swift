@@ -9,13 +9,15 @@ import UIKit
 
 class RouteInfoCell: UICollectionViewCell {
     
+    public var routeId: String = ""
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var sourceLabel: UILabel = {
+    private lazy var sourceDestinationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -27,17 +29,15 @@ class RouteInfoCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var destinationLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var sourceDestinationLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    override var isSelected: Bool {
+        didSet{
+            if isSelected == false {
+                self.contentView.backgroundColor = .cyan
+            } else {
+                self.contentView.backgroundColor = .green
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,6 +82,7 @@ extension RouteInfoCell {
     }
     
     public func configure(cellViewModel: RouteInfoCellViewModel) {
+        routeId = cellViewModel.routeId
         nameLabel.text = cellViewModel.routeName
         sourceDestinationLabel.text = "\(cellViewModel.routeSource)-\(cellViewModel.routeDestination)"
         tripDurationLabel.text = cellViewModel.routeTripDuration
