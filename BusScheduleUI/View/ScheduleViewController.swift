@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private var myCollectionView: UICollectionView = {
+    private var routeInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 240, height: 100)
@@ -20,9 +20,7 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
-    private var routeInfoList = [RouteInfo]()
-    
-    let urlString = "https://jsonkeeper.com/b/XVSX"
+    private var routeInfoViewModel = RouteInfoViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,32 +28,32 @@ class ViewController: UIViewController {
         setupCollectionView()
         styleCollectionView()
         
-        NetworkManager<APIResponse>().fetchData(from: urlString) { (result) in
-            self.routeInfoList = result.routeInfo
-            self.myCollectionView.reloadData()
+        routeInfoViewModel.fetchRouteInfo {
+            DispatchQueue.main.async {
+                self.routeInfoCollectionView.reloadData()
+            }
         }
         
     }
-
 
 }
 
 extension ViewController {
     
     private func setupCollectionView() {
-        myCollectionView.register(RouteInfoCell.self, forCellWithReuseIdentifier: RouteInfoCell.reuseIdentifier)
+        routeInfoCollectionView.register(RouteInfoCell.self, forCellWithReuseIdentifier: RouteInfoCell.reuseIdentifier)
         
-        myCollectionView.delegate = self
-        myCollectionView.dataSource = self
+        routeInfoCollectionView.delegate = self
+        routeInfoCollectionView.dataSource = self
     }
     
     private func styleCollectionView() {
-        self.view.addSubview(myCollectionView)
+        self.view.addSubview(routeInfoCollectionView)
         NSLayoutConstraint.activate([
-                                        myCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 48),
-                                        myCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                                        myCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                        myCollectionView.heightAnchor.constraint(equalToConstant: 160)
+                                        routeInfoCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 48),
+                                        routeInfoCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                                        routeInfoCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                                        routeInfoCollectionView.heightAnchor.constraint(equalToConstant: 160)
         ])
     }
     
@@ -74,18 +72,13 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return routeInfoList.count
+        return routeInfoViewModel.numberOfItemsInSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RouteInfoCell.reuseIdentifier, for: indexPath) as! RouteInfoCell
 
-        let routeName = routeInfoList[indexPath.row].name
-        let routeSource = routeInfoList[indexPath.row].source
-        let routeDestination = routeInfoList[indexPath.row].destination
-        let routeTripDuration = routeInfoList[indexPath.row].tripDuration
-
-        cell.configure(name: routeName, source: routeSource, destination: routeDestination, tripDuration: routeTripDuration)
+        cell.configure(cellViewModel: routeInfoViewModel.getCellModel(at: indexPath))
         
         return cell
     }

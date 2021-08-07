@@ -54,6 +54,8 @@ extension RouteInfoCell {
     
     private func setupViews() {
         
+        styleContentView()
+        
         addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -73,10 +75,16 @@ extension RouteInfoCell {
         ])
     }
     
-    public func configure(name: String, source: String, destination: String, tripDuration: String) {
-        nameLabel.text = name
-        sourceDestinationLabel.text = "\(source)-\(destination)"
-        tripDurationLabel.text = tripDuration
+    private func styleContentView() {
+        contentView.backgroundColor = .cyan
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = contentView.frame.height / 2
+    }
+    
+    public func configure(cellViewModel: RouteInfoCellViewModel) {
+        nameLabel.text = cellViewModel.routeName
+        sourceDestinationLabel.text = "\(cellViewModel.routeSource)-\(cellViewModel.routeDestination)"
+        tripDurationLabel.text = cellViewModel.routeTripDuration
     }
     
 }

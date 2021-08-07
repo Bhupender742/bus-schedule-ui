@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		926575F926BE35E3001A2D76 /* RouteInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */; };
+		926575FB26BE36F7001A2D76 /* RouteInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */; };
 		9284D0A426BD42710036453D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A326BD42710036453D /* AppDelegate.swift */; };
 		9284D0A626BD42710036453D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A526BD42710036453D /* SceneDelegate.swift */; };
 		9284D0A826BD42710036453D /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284D0A726BD42710036453D /* ScheduleViewController.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoCellViewModel.swift; sourceTree = "<group>"; };
+		926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoViewModel.swift; sourceTree = "<group>"; };
 		9284D0A026BD42710036453D /* BusScheduleUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusScheduleUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9284D0A326BD42710036453D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9284D0A526BD42710036453D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		926575F726BE3514001A2D76 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				926575FA26BE36F7001A2D76 /* RouteInfoViewModel.swift */,
+				926575F826BE35E3001A2D76 /* RouteInfoCellViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		9284D09726BD42710036453D = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +82,7 @@
 				9284D0A926BD42710036453D /* Main.storyboard */,
 				9284D0BB26BD47D40036453D /* Model */,
 				9284D0BA26BD46070036453D /* View */,
+				926575F726BE3514001A2D76 /* View Model */,
 				9284D0B726BD43200036453D /* NetworkManager */,
 				9284D0AC26BD42720036453D /* Assets.xcassets */,
 				9284D0AE26BD42720036453D /* LaunchScreen.storyboard */,
@@ -178,7 +192,9 @@
 				9284D0A426BD42710036453D /* AppDelegate.swift in Sources */,
 				9284D0BD26BD47F30036453D /* RouteModel.swift in Sources */,
 				9284D0A626BD42710036453D /* SceneDelegate.swift in Sources */,
+				926575FB26BE36F7001A2D76 /* RouteInfoViewModel.swift in Sources */,
 				9284D0BF26BD48DF0036453D /* RouteInfoCell.swift in Sources */,
+				926575F926BE35E3001A2D76 /* RouteInfoCellViewModel.swift in Sources */,
 				9284D0C126BD4D9D0036453D /* Reusable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
