@@ -35,6 +35,10 @@ extension RouteTimingViewModel {
         return routeTimingArray.count
     }
     
+    public func isEmpty() -> Bool {
+        return routeTimingArray.count == 0
+    }
+    
     public func removeAllPresentRouteTimings() {
         if routeTimingArray.count > 0 {
             routeTimingArray.removeAll()

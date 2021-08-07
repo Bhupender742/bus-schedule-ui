@@ -90,6 +90,20 @@ extension ViewController {
 // MARK:- CollectionViewDelegates
 extension ViewController: UICollectionViewDelegate {
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if routeTimingViewModel.isEmpty() {
+            let centerIndex = routeInfoViewModel.numberOfItemsInSection() / 2
+            let indexPath = IndexPath(item: centerIndex, section: 0)
+            
+            let routeID = routeInfoViewModel.getMidSectionRouteID()
+            routeTimingViewModel.addRouteTimings(routeID: routeID)
+
+            routeInfoCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+
+            self.routeTimingTableView.reloadData()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RouteInfoCell
         

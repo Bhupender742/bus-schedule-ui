@@ -34,4 +34,9 @@ extension RouteInfoViewModel {
         return routeInfoList.count
     }
     
+    public func getMidSectionRouteID() -> String {
+        let centerIndex = self.numberOfItemsInSection() / 2
+        return routeInfoList[centerIndex].id
+    }
+    
 }
