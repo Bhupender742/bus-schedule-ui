@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ScheduleViewController.swift
 //  BusScheduleUI
 //
 //  Created by Bhupender Rawat on 06/08/21.
@@ -26,26 +26,14 @@ class ViewController: UIViewController {
         return tableView
     }()
     
-//    private var routeTimingCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        collectionView.backgroundColor = .gray
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        return collectionView
-//    }()
-    
-    private let urlString = "https://jsonkeeper.com/b/XVSX"
-    
     private var routeInfoViewModel = RouteInfoViewModel()
-    private var routeTimingList = [String: [RouteTiming]]()
-    private var routeTimingArray = [RouteTiming]()
+    private var routeTimingViewModel = RouteTimingViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupCollectionView()
-        styleCollectionView()
+        setupViews()
+        styleViews()
         
         routeInfoViewModel.fetchRouteInfo {
             DispatchQueue.main.async {
@@ -53,8 +41,10 @@ class ViewController: UIViewController {
             }
         }
         
-        NetworkManager<APIResponse>().fetchData(from: urlString) { (result) in
-           self.routeTimingList = result.routeTimings
+        routeTimingViewModel.fetchRouteTiming {
+            DispatchQueue.main.async {
+                self.routeTimingTableView.reloadData()
+            }
         }
         
     }
@@ -63,22 +53,18 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    private func setupCollectionView() {
+    private func setupViews() {
         routeInfoCollectionView.register(RouteInfoCell.self, forCellWithReuseIdentifier: RouteInfoCell.reuseIdentifier)
         
         routeInfoCollectionView.delegate = self
         routeInfoCollectionView.dataSource = self
         
-//        routeTimingCollectionView.register(RouteTimingCell.self, forCellWithReuseIdentifier: RouteTimingCell.reuseIdentifier)
-//        routeTimingCollectionView.delegate = self
-//        routeTimingCollectionView.dataSource = self
-        
-        routeTimingTableView.register(RouteTimingTableViewCell.self, forCellReuseIdentifier: String(describing: RouteTimingTableViewCell.self))
+        routeTimingTableView.register(RouteTimingCell.self, forCellReuseIdentifier: String(describing: RouteTimingCell.self))
         routeTimingTableView.delegate = self
         routeTimingTableView.dataSource = self
     }
     
-    private func styleCollectionView() {
+    private func styleViews() {
         self.view.addSubview(routeInfoCollectionView)
         NSLayoutConstraint.activate([
                                         routeInfoCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 48),
@@ -95,97 +81,63 @@ extension ViewController {
             routeTimingTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
-//        self.view.addSubview(routeTimingCollectionView)
-//        NSLayoutConstraint.activate([
-//                                        routeTimingCollectionView.topAnchor.constraint(equalTo: routeInfoCollectionView.bottomAnchor, constant: 8),
-//                                        routeTimingCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-//                                        routeTimingCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-//                                        routeTimingCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-//        ])
+        routeTimingTableView.separatorStyle = .none
+        
     }
     
 }
 
+// MARK:- CollectionViewDelegates
 extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RouteInfoCell
         cell.isSelected = true
         
-        routeTimingArray.removeAll()
-        for item in routeTimingList {
-            if item.key == cell.routeId {
-                for i in item.value {
-                    routeTimingArray.append(i)
-                }
-            }
-        }
+        routeTimingViewModel.removeAllPresentRouteTimings()
+        routeTimingViewModel.addRouteTimings(routeID: cell.routeID)
         
         self.routeTimingTableView.reloadData()
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as! RouteInfoCell
-//        cell.isSelected = false
-//        print("is deselected")
-//        routeTimingArray.removeAll()
-//        self.routeTimingTableView.reloadData()
-//    }
-    
 }
 
+// MARK:- CollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.routeTimingCollectionView {
-            return routeTimingArray.count
-        }
         return routeInfoViewModel.numberOfItemsInSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if collectionView == self.routeInfoCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RouteInfoCell.reuseIdentifier, for: indexPath) as! RouteInfoCell
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RouteInfoCell.reuseIdentifier, for: indexPath) as! RouteInfoCell
             
-            cell.configure(cellViewModel: routeInfoViewModel.getCellModel(at: indexPath))
+        cell.configure(cellViewModel: routeInfoViewModel.getCellModel(at: indexPath))
             
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RouteTimingCell.self), for: indexPath) as! RouteTimingCell
-            
-            let startTime = routeTimingArray[indexPath.row].tripStartTime
-            let availableSeats = routeTimingArray[indexPath.row].avaiable
-            let totalSeats = routeTimingArray[indexPath.row].totalSeats
-            
-            cell.configure(startTime: startTime, availableSeats: availableSeats, totalSeats: totalSeats)
-            
-            return cell
-        }
+        return cell
     }
     
     
 }
 
+// MARK:- TableViewDelegates
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
 }
 
+// MARK:- TableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeTimingArray.count
+        return routeTimingViewModel.numberOfRowsInSection()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RouteTimingTableViewCell.self), for: indexPath) as! RouteTimingTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: RouteTimingCell.reuseIdentifier, for: indexPath) as! RouteTimingCell
 
-        let startTime = routeTimingArray[indexPath.row].tripStartTime
-        let availableSeats = routeTimingArray[indexPath.row].avaiable
-        let totalSeats = routeTimingArray[indexPath.row].totalSeats
-
-        cell.configure(startTime: startTime, availableSeats: availableSeats, totalSeats: totalSeats)
+        cell.configure(cellViewModel: routeTimingViewModel.getCellModel(at: indexPath))
 
         return cell
     }

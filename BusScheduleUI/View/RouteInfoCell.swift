@@ -9,7 +9,7 @@ import UIKit
 
 class RouteInfoCell: UICollectionViewCell {
     
-    public var routeId: String = ""
+    public var routeID: String = ""
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -82,7 +82,7 @@ extension RouteInfoCell {
     }
     
     public func configure(cellViewModel: RouteInfoCellViewModel) {
-        routeId = cellViewModel.routeId
+        routeID = cellViewModel.routeId
         nameLabel.text = cellViewModel.routeName
         sourceDestinationLabel.text = "\(cellViewModel.routeSource)-\(cellViewModel.routeDestination)"
         tripDurationLabel.text = cellViewModel.routeTripDuration

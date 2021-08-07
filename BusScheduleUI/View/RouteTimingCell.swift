@@ -7,7 +7,13 @@
 
 import UIKit
 
-class RouteTimingCell: UICollectionViewCell {
+class RouteTimingCell: UITableViewCell {
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var startTimeLabel: UILabel = {
         let label = UILabel()
@@ -21,8 +27,8 @@ class RouteTimingCell: UICollectionViewCell {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
@@ -36,35 +42,52 @@ extension RouteTimingCell {
     
     private func setupViews() {
         
-        styleContentView()
+        contentView.addSubview(containerView)
+        NSLayoutConstraint.activate([
+                                        containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                                        containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+                                        containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+                                        containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+        ])
+        
+        styleContainerView()
         
         addSubview(startTimeLabel)
         NSLayoutConstraint.activate([
-            startTimeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            startTimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            startTimeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8)
+            startTimeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+            startTimeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
         
         addSubview(availableSeatLabel)
         NSLayoutConstraint.activate([
-            availableSeatLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            availableSeatLabel.leadingAnchor.constraint(equalTo: startTimeLabel.trailingAnchor, constant: 24),
-            availableSeatLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            availableSeatLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            availableSeatLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+            availableSeatLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
     }
     
-    private func styleContentView() {
-        contentView.backgroundColor = .cyan
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = contentView.frame.height / 2
+    private func styleContainerView() {
+        containerView.backgroundColor = .cyan
+        containerView.clipsToBounds = true
+        containerView.layer.cornerRadius = contentView.frame.height / 2
     }
     
-    public func configure(startTime: String, availableSeats: Int, totalSeats: Int) {
-        startTimeLabel.text = "Start time: \(startTime)"
-        availableSeatLabel.text = "Available Seat: \(availableSeats)/\(totalSeats)"
+    public func configure(cellViewModel: RouteTimingCellViewModel) {
+        startTimeLabel.text = "Start time: \(cellViewModel.tripStartTime)"
+        availableSeatLabel.text = "Available Seat: \(cellViewModel.availabelSeats)/\(cellViewModel.totalSeats)"
     }
     
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
 }
 
 extension RouteTimingCell: Reusable {}
