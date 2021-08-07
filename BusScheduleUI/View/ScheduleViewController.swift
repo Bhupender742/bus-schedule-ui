@@ -92,11 +92,12 @@ extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RouteInfoCell
-        cell.isSelected = true
         
         routeTimingViewModel.removeAllPresentRouteTimings()
         routeTimingViewModel.addRouteTimings(routeID: cell.routeID)
         
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        cell.isSelected = true
         self.routeTimingTableView.reloadData()
     }
     
@@ -112,7 +113,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RouteInfoCell.reuseIdentifier, for: indexPath) as! RouteInfoCell
-            
+        
         cell.configure(cellViewModel: routeInfoViewModel.getCellModel(at: indexPath))
             
         return cell

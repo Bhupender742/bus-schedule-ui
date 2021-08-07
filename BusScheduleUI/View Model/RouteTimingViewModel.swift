@@ -36,16 +36,25 @@ extension RouteTimingViewModel {
     }
     
     public func removeAllPresentRouteTimings() {
-        routeTimingArray.removeAll()
+        if routeTimingArray.count > 0 {
+            routeTimingArray.removeAll()
+        }
+        return
     }
     
     public func addRouteTimings(routeID: String) {
-        for item in routeTimingList {
-            if item.key == routeID {
-                for i in item.value {
-                    routeTimingArray.append(i)
+//        let routes = routeTimingList.filter{ $0.key == routeID }.map{ $0.value }
+//        for routeTimingArray in routes.map({$0}) {
+//            print(routeTimingArray)
+//            self.routeTimingArray = routeTimingArray
+//        }
+        for routesDict in routeTimingList {
+            if routesDict.key == routeID {
+                for route in routesDict.value {
+                    routeTimingArray.append(route)
                 }
             }
         }
+        
     }
 }
