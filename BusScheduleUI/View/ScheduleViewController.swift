@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     private var routeInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 240, height: 100)
+        layout.itemSize = CGSize(width: 320, height: 128)
         layout.minimumInteritemSpacing = 16
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white

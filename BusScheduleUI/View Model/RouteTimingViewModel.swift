@@ -51,13 +51,5 @@ extension RouteTimingViewModel {
         for routeTimingArray in routes.map({ $0 }) {
             self.routeTimingArray = routeTimingArray
         }
-//        for routesDict in routeTimingList {
-//            if routesDict.key == routeID {
-//                for route in routesDict.value {
-//                    routeTimingArray.append(route)
-//                }
-//            }
-//        }
-        
     }
 }

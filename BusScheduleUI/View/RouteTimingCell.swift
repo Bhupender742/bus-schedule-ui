@@ -18,12 +18,14 @@ class RouteTimingCell: UITableViewCell {
     private lazy var startTimeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Avenir-Light", size: 20)
         return label
     }()
     
     private lazy var availableSeatLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Avenir-Light", size: 20)
         return label
     }()
     

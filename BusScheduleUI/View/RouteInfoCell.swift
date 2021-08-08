@@ -14,18 +14,21 @@ class RouteInfoCell: UICollectionViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Avenir-Light", size: 24)
         return label
     }()
     
     private lazy var sourceDestinationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Avenir-Light", size: 24)
         return label
     }()
     
     private lazy var tripDurationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Avenir-Light", size: 24)
         return label
     }()
     
