@@ -47,18 +47,17 @@ extension RouteTimingViewModel {
     }
     
     public func addRouteTimings(routeID: String) {
-//        let routes = routeTimingList.filter{ $0.key == routeID }.map{ $0.value }
-//        for routeTimingArray in routes.map({$0}) {
-//            print(routeTimingArray)
-//            self.routeTimingArray = routeTimingArray
-//        }
-        for routesDict in routeTimingList {
-            if routesDict.key == routeID {
-                for route in routesDict.value {
-                    routeTimingArray.append(route)
-                }
-            }
+        let routes = routeTimingList.filter{ $0.key == routeID }.map{ $0.value }
+        for routeTimingArray in routes.map({ $0 }) {
+            self.routeTimingArray = routeTimingArray
         }
+//        for routesDict in routeTimingList {
+//            if routesDict.key == routeID {
+//                for route in routesDict.value {
+//                    routeTimingArray.append(route)
+//                }
+//            }
+//        }
         
     }
 }

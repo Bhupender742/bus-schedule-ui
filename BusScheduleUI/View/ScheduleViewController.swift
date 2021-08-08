@@ -91,16 +91,21 @@ extension ViewController {
 extension ViewController: UICollectionViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if routeTimingViewModel.isEmpty() {
+        if routeTimingViewModel.isEmpty(), routeInfoViewModel.getSelectedCellIndex() == nil {
             let centerIndex = routeInfoViewModel.numberOfItemsInSection() / 2
             let indexPath = IndexPath(item: centerIndex, section: 0)
             
-            let routeID = routeInfoViewModel.getMidSectionRouteID()
+            routeInfoViewModel.selectCell(at: indexPath)
+            
+            let routeID = routeInfoViewModel.getMidCellRouteID()
             routeTimingViewModel.addRouteTimings(routeID: routeID)
 
             routeInfoCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
 
             self.routeTimingTableView.reloadData()
+        } else {
+            guard let indexPath = routeInfoViewModel.getSelectedCellIndex() else { return }
+            routeInfoCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
     
@@ -110,8 +115,8 @@ extension ViewController: UICollectionViewDelegate {
         routeTimingViewModel.removeAllPresentRouteTimings()
         routeTimingViewModel.addRouteTimings(routeID: cell.routeID)
         
+        routeInfoViewModel.selectCell(at: indexPath)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        cell.isSelected = true
         self.routeTimingTableView.reloadData()
     }
     
